@@ -30,6 +30,8 @@ class EmployeeController extends Controller
 
     public function store(StoreEmployeeRequest $request): RedirectResponse
     {
+
+        // dd($request);
         $employee = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -38,6 +40,8 @@ class EmployeeController extends Controller
             'created_by' => auth()->id(),
             'email_verified_at' => now(),
         ]);
+
+        // dd($employee);
 
         $employee->assignRole($request->role);
 
