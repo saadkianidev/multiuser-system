@@ -18,10 +18,10 @@ class CompanyController extends Controller
         return view('company.index', compact('companies'));
     }
 
-  public function create(): View
-{
-    return view('company.create', ['company' => null]);
-}
+    public function create(): View
+    {
+        return view('company.create', ['company' => null]);
+    }
 
     public function store(StoreCompanyRequest $request): RedirectResponse
     {
