@@ -10,28 +10,23 @@ class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        // Reset cached roles/permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
-            // Users
             'view users',
             'create users',
             'edit users',
             'delete users',
 
-            // Companies
             'view companies',
             'create companies',
             'edit companies',
             'delete companies',
 
-            // Conversations / Chat
             'view conversations',
             'create conversations',
             'send messages',
 
-            // Dashboards
             'access super-admin dashboard',
             'access admin dashboard',
             'access employee dashboard',

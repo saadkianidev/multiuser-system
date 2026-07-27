@@ -12,11 +12,12 @@ use Illuminate\View\View;
 
 class SuperAdminCompanyController extends Controller
 {
-    public function index(): View
+    public function index()
+    
     {
-        $companies = Company::with(['owner', 'profile', 'theme'])->get();
+        $companies = Company::with(['owner', 'profile'])->get();
 
-        return view('super_admin.companies.index', compact('companies'));
+        return view('super_admin.companies.index', ['companies' => $companies]);
     }
 
     public function create(): View

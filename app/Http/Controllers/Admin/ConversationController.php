@@ -47,7 +47,6 @@ class ConversationController extends Controller
         return view('admin.conversations.create', compact('companies'));
     }
 
-    // AJAX/partial endpoint: get employees+guests for a chosen company
     public function usersForCompany(Company $company)
     {
         $this->authorizeCompany($company);
@@ -72,7 +71,6 @@ class ConversationController extends Controller
                 'created_by' => Auth::id(),
             ]);
 
-            // always include creator as a participant
             $participantIds = array_unique(array_merge(
                 $request->participant_ids,
                 [Auth::id()]
@@ -85,7 +83,6 @@ class ConversationController extends Controller
                 'body' => $request->body,
             ]);
 
-            // creator's own message counts as read for them
             MessageRead::create([
                 'message_id' => $message->id,
                 'user_id' => Auth::id(),

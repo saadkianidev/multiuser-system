@@ -1,86 +1,93 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="fw-semibold fs-4 text-dark">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+    <div class="py-5">
+        <div class="container">
+            <div class="card shadow-sm">
+                <div class="card-body">
                     {{ __("You're logged in!") }}
                 </div>
             </div>
 
             @if (isset($admins))
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-6">
-                    <div class="p-6 text-gray-900">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-semibold">Admins & Their Companies</h3>
+                <div class="card shadow-sm mt-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="fs-5 fw-semibold mb-0">Admins & Their Companies</h3>
                             <a href="{{ route('super_admin.admins.create') }}"
-                                class="bg-indigo-600 text-black px-4 py-2 rounded text-sm hover:bg-indigo-700">
+                                class="btn btn-primary btn-sm">
                                 + Add Admin
                             </a>
                         </div>
 
                         @if (session('status'))
-                            <div class="mb-4 p-3 bg-green-100 text-green-800 rounded text-sm">
+                            <div class="alert alert-success py-2 small mb-3" role="alert">
                                 {{ session('status') }}
                             </div>
                         @endif
 
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="border-b">
-                                    <th class="py-2 pr-4">Admin Name</th>
-                                    <th class="py-2 pr-4">Email</th>
-                                    <th class="py-2 pr-4">Companies</th>
-                                    <th class="py-2">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($admins as $admin)
-                                    <tr class="border-b">
-                                        <td class="py-2 pr-4">{{ $admin->name }}</td>
-                                        <td class="py-2 pr-4">{{ $admin->email }}</td>
-                                        <td class="py-2 pr-4">
-                                            @forelse ($admin->ownedCompanies as $company)
-                                                <span class="inline-block bg-gray-100 rounded px-2 py-1 text-sm mr-1">
-                                                    {{ $company->name }}
-                                                </span>
-                                            @empty
-                                                <span class="text-gray-400 text-sm">No companies</span>
-                                            @endforelse
-                                        </td>
-                                        <td class="py-2 space-x-3">
-                                            <a href="{{ route('super_admin.admins.edit', $admin) }}"
-                                                class="text-indigo-600 hover:underline text-sm">Edit</a>
-
-                                            <form action="{{ route('super_admin.admins.destroy', $admin) }}" method="POST"
-                                                class="inline" onsubmit="return confirm('Delete this admin?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:underline text-sm">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @empty
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle mb-0">
+                                <thead>
                                     <tr>
-                                        <td colspan="4" class="py-2 text-gray-400">No admins found.</td>
+                                        <th>Admin Name</th>
+                                        <th>Email</th>
+                                        <th>Companies</th>
+                                        <th class="text-end">Actions</th>
                                     </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-6">
-                            <div class="p-6 text-gray-900">
-                                <a href="{{ route('super_admin.companies.index') }}"
-                                    class="bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700">
-                                    Manage All Companies →
-                                </a>
-                            </div>
+                                </thead>
+                                <tbody>
+                                    @forelse ($admins as $admin)
+                                        <tr>
+                                            <td>{{ $admin->name }}</td>
+                                            <td>{{ $admin->email }}</td>
+                                            <td>
+                                                @forelse ($admin->ownedCompanies as $company)
+                                                    <span class="badge bg-light text-dark border me-1">
+                                                        {{ $company->name }}
+                                                    </span>
+                                                @empty
+                                                    <span class="text-muted small">No companies</span>
+                                                @endforelse
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="{{ route('super_admin.admins.edit', $admin) }}"
+                                                    class="text-primary small me-3 text-decoration-none">
+                                                    Edit
+                                                </a>
+
+                                                <form action="{{ route('super_admin.admins.destroy', $admin) }}"
+                                                    method="POST" class="d-inline"
+                                                    onsubmit="return confirm('Delete this admin?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-link text-danger small p-0 text-decoration-none">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-muted text-center py-3">
+                                                No admins found.
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <a href="{{ route('super_admin.companies.index') }}"
+                                class="btn btn-outline-primary btn-sm">
+                                Manage All Companies &rarr;
+                            </a>
                         </div>
                     </div>
                 </div>

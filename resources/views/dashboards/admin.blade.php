@@ -7,7 +7,7 @@
     <div class="mb-3">
         <a href="{{ route('admin.companies.index') }}" class="btn btn-outline-primary btn-sm">Manage Companies</a>
         <a href="{{ route('admin.employees.index') }}" class="btn btn-outline-primary btn-sm">Manage Employees</a>
-        <a href="{{ route('conversations.index') }}" class="btn btn-outline-success btn-sm">Conversations</a>
+        {{-- <a href="{{ route('conversations.index') }}" class="btn btn-outline-success btn-sm">Conversations</a> --}}
     </div>
 
     {{-- Companies Section --}}

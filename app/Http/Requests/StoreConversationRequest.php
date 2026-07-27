@@ -9,7 +9,7 @@ class StoreConversationRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // gate checked in controller against owned companies
+        return true;
     }
 
     public function rules(): array

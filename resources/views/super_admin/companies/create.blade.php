@@ -1,71 +1,106 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Add Company') }}</h2>
+        <h2 class="fw-semibold fs-4 text-dark">{{ __('Add Company') }}</h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-5">
+        <div class="container" style="max-width: 48rem;">
 
-            <button onclick="window.history.back()" class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 mb-4">
-                &larr; Back
+            <button onclick="window.history.back()" class="btn btn-link btn-sm text-secondary text-decoration-none ps-0 mb-3">
+                &larr; {{ __('Back') }}
             </button>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
 
                     <form method="POST" action="{{ route('super_admin.companies.store') }}">
                         @csrf
 
-                        <div class="mb-4">
-                            <x-input-label for="owner_id" :value="__('Admin (Owner)')" />
-                            <select id="owner_id" name="owner_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
-                                <option value="">-- Select Admin --</option>
+                        <div class="mb-3">
+                            <label for="owner_id" class="form-label">{{ __('Admin (Owner)') }}</label>
+                            <select id="owner_id" name="owner_id"
+                                class="form-select @error('owner_id') is-invalid @enderror" required>
+                                <option value="">-- {{ __('Select Admin') }} --</option>
                                 @foreach ($admins as $admin)
                                     <option value="{{ $admin->id }}" {{ old('owner_id') == $admin->id ? 'selected' : '' }}>
                                         {{ $admin->name }} ({{ $admin->email }})
                                     </option>
                                 @endforeach
                             </select>
-                            <x-input-error :messages="$errors->get('owner_id')" class="mt-2" />
+                            @error('owner_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="mb-4">
-                            <x-input-label for="name" :value="__('Company Name')" />
-                            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name')" required autofocus />
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        <div class="mb-3">
+                            <label for="name" class="form-label">{{ __('Company Name') }}</label>
+                            <input id="name" name="name" type="text"
+                                class="form-control @error('name') is-invalid @enderror"
+                                value="{{ old('name') }}" required autofocus>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="mb-4">
-                            <x-input-label for="description" :value="__('Description')" />
-                            <textarea id="description" name="description" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('description') }}</textarea>
-                            <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                        <div class="mb-3">
+                            <label for="description" class="form-label">{{ __('Description') }}</label>
+                            <textarea id="description" name="description" rows="3"
+                                class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <x-input-label for="address" :value="__('Address')" />
-                                <x-text-input id="address" name="address" type="text" class="mt-1 block w-full" :value="old('address')" />
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <label for="address" class="form-label">{{ __('Address') }}</label>
+                                <input id="address" name="address" type="text"
+                                    class="form-control @error('address') is-invalid @enderror"
+                                    value="{{ old('address') }}">
+                                @error('address')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div>
-                                <x-input-label for="city" :value="__('City')" />
-                                <x-text-input id="city" name="city" type="text" class="mt-1 block w-full" :value="old('city')" />
+                            <div class="col-6">
+                                <label for="city" class="form-label">{{ __('City') }}</label>
+                                <input id="city" name="city" type="text"
+                                    class="form-control @error('city') is-invalid @enderror"
+                                    value="{{ old('city') }}">
+                                @error('city')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div>
-                                <x-input-label for="country" :value="__('Country')" />
-                                <x-text-input id="country" name="country" type="text" class="mt-1 block w-full" :value="old('country')" />
+                            <div class="col-6">
+                                <label for="country" class="form-label">{{ __('Country') }}</label>
+                                <input id="country" name="country" type="text"
+                                    class="form-control @error('country') is-invalid @enderror"
+                                    value="{{ old('country') }}">
+                                @error('country')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div>
-                                <x-input-label for="phone" :value="__('Phone')" />
-                                <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone')" />
+                            <div class="col-6">
+                                <label for="phone" class="form-label">{{ __('Phone') }}</label>
+                                <input id="phone" name="phone" type="text"
+                                    class="form-control @error('phone') is-invalid @enderror"
+                                    value="{{ old('phone') }}">
+                                @error('phone')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="col-span-2">
-                                <x-input-label for="website" :value="__('Website')" />
-                                <x-text-input id="website" name="website" type="text" class="mt-1 block w-full" :value="old('website')" />
+                            <div class="col-12">
+                                <label for="website" class="form-label">{{ __('Website') }}</label>
+                                <input id="website" name="website" type="text"
+                                    class="form-control @error('website') is-invalid @enderror"
+                                    value="{{ old('website') }}">
+                                @error('website')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-end mt-6">
-                            <x-primary-button>{{ __('Save') }}</x-primary-button>
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                         </div>
                     </form>
 

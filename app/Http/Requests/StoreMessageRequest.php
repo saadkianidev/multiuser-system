@@ -8,7 +8,7 @@ class StoreMessageRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // checked in controller (must be a participant)
+        return true;
     }
 
     public function rules(): array

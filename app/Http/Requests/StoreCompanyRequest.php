@@ -26,7 +26,6 @@ class StoreCompanyRequest extends FormRequest
             'font' => ['nullable', 'string', 'max:100'],
         ];
 
-        // Only super_admin picks the owner explicitly
         if ($this->user()->hasRole('super_admin')) {
             $rules['owner_id'] = ['required', 'exists:users,id'];
         }
